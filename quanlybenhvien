@@ -1,5 +1,21 @@
 class BENHNHAN
 {
+private String hoten;
+private int ngay;
+private int thang;
+private int nam;
+private String diachi;
+private String mabaohiem;
+public BENHNHAN()
+{
+}
+public BENHNHAN(string hoten, int ngay, int thang, int nam, string diachi, String mabaohiem)
+{
+hoten
+}
+
+class NHANVIEN
+{
 
 }
 class BACSI
