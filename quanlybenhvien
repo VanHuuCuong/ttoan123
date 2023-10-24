@@ -1,3 +1,4 @@
+import java.util.Scanner;
 class BENHNHAN
 {
 private String hoten;
@@ -8,12 +9,36 @@ private String diachi;
 private String mabaohiem;
 public BENHNHAN()
 {
-}
-public BENHNHAN(string hoten, int ngay, int thang, int nam, string diachi, String mabaohiem)
-{
-hoten
-}
 
+}
+public BENHNHAN(String hoten, int ngay, int thang , int nam, String diachi, String mabaohiem)
+{
+    this.hoten = hoten;
+    this.ngay=ngay;
+    this.thang = thang;
+    this.nam= nam;
+    this.diachi=diachi;
+    this.mabaohiem=mabaohiem;
+}
+public void Nhap()
+{
+    System.out.println("Ho ten benh nhan: ");
+    Scanner sc = new Scanner (System.in);
+    hoten = sc.nextLine();
+    System.out.println("Nhap ngay thang nam sinh: ");
+    ngay = sc.nextInt();
+    thang = sc. nextInt();
+    nam = sc.nextInt();
+    System.out.println("Nhap dia chi: ");
+    diachi = sc.nextLine();
+    System.out.println("Nhap ma bao hiem neu co: ");
+    mabaohiem = sc.nextLine();
+}
+public void Xuat()
+{
+
+}
+}
 class NHANVIEN
 {
 
