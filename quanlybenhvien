@@ -1,49 +1,94 @@
 import java.util.Scanner;
-class BENHNHAN
-{
-private String hoten;
-private int ngay;
-private int thang;
-private int nam;
-private String diachi;
-private String mabaohiem;
-public BENHNHAN()
-{
+
+public class ConNguoi {
+    private String hoten;
+    private int ngay;
+    private int thang;
+    private int nam;
+    private String diachi;
+    public ConNguoi(){
+
+    }
+    public ConNguoi(String hoten, int ngay,int thang, int nam, String diachi){
+        this.hoten=hoten;
+        this.ngay=ngay;
+        this.nam=nam;
+        this.thang=thang;
+        this.diachi= diachi;
+    }
+    public void nhap(){
+        System.out.println("Ho ten benh nhan: ");
+        Scanner sc = new Scanner(System.in);
+        hoten = sc.nextLine();
+        System.out.println("Nhap ngay thang nam sinh: ");
+        ngay = sc.nextInt();
+        thang = sc. nextInt();
+        nam = sc.nextInt();
+        System.out.println("Nhap dia chi: ");
+        diachi = sc.nextLine();
+    }
+    public void xuat(){
+        System.out.println("Ho ten benh nhan: "+ hoten);
+        System.out.println("ngay thang nam sinh: "+ ngay+ thang+ nam);
+        System.out.println("dia chi: "+ diachi);
+    }
 
 }
-public BENHNHAN(String hoten, int ngay, int thang , int nam, String diachi, String mabaohiem)
-{
-    this.hoten = hoten;
-    this.ngay=ngay;
-    this.thang = thang;
-    this.nam= nam;
-    this.diachi=diachi;
-    this.mabaohiem=mabaohiem;
-}
-public void Nhap()
-{
-    System.out.println("Ho ten benh nhan: ");
-    Scanner sc = new Scanner (System.in);
-    hoten = sc.nextLine();
-    System.out.println("Nhap ngay thang nam sinh: ");
-    ngay = sc.nextInt();
-    thang = sc. nextInt();
-    nam = sc.nextInt();
-    System.out.println("Nhap dia chi: ");
-    diachi = sc.nextLine();
-    System.out.println("Nhap ma bao hiem neu co: ");
-    mabaohiem = sc.nextLine();
-}
-public void Xuat()
-{
 
+public class BenhNhan extends ConNguoi {
+    private String mabaohiem;
+    public BenhNhan()
+    {
+
+    }
+    public BenhNhan(String hoten, int ngay, int thang , int nam, String diachi, String mabaohiem)
+    {
+        super(hoten,ngay,thang,nam,diachi);
+        this.mabaohiem=mabaohiem;
+    }
+    public void Nhap()
+    {
+        Scanner sc= new Scanner(System.in);
+        super.nhap();
+        System.out.println("Nhap ma bao hiem (neu co): ");
+        mabaohiem = sc.nextLine();
+    }
+    public  void xuat(){
+        super.xuat();
+        if(!mabaohiem.equals(null)){
+            System.out.println("Ma bao hiem: "+mabaohiem);
+        }
+    }
 }
+
+public class BacSi extends ConNguoi{
+    private String chuyenKhoa;
+    private int maSo;
+    private String lichLamViec;
+    private List<BenhNhan> benhNhans;
+    public BacSi(){
+
+    }
+
+    public void Nhap()
+    {
+        Scanner sc = new Scanner(System.in);
+        super.nhap();
+        System.out.println("Nhap chuyen khoa cua bac si: ");
+        chuyenKhoa= sc.nextLine();
+        System.out.println("Nhap ma so bac si: ");
+        maSo= sc.nextInt();
+        System.out.println("Nhap lich lam viec bac si: ");
+        lichLamViec= sc.nextLine();
+    }
+    public void xuat(){
+        super.xuat();
+        System.out.println("Chuyen khoa cua bac si: "+chuyenKhoa);
+        System.out.println("Ma so bac si: "+maSo);
+        System.out.println("Lich lam viec bac si: "+lichLamViec);
+    }
 }
 class NHANVIEN
-{
-
-}
-class BACSI
 {
 
 }
