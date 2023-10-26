@@ -36,7 +36,11 @@ public void Nhap()
 }
 public void Xuat()
 {
-
+    System.out.println("Thong tin nguoi benh: ");
+    System.out.println("Ho ten: " + hoten);
+    System.out.println("Ngay thang nam sinh: " +ngay+ "/" +thang+ "/" +nam);
+    System.out.println("Dia chi: "+diachi);
+    System.out.println("Ma bao hiem: "+mabaohiem);
 }
 }
 class NHANVIEN
