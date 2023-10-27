@@ -45,7 +45,8 @@ public void Xuat()
 }
 class NHANVIEN
 {
-
+private String name;
+private int age;
 }
 class BACSI
 {
