@@ -43,13 +43,31 @@ public void Xuat()
     System.out.println("Ma bao hiem: "+mabaohiem);
 }
 }
-class NHANVIEN
+class Nhanvien 
 {
-private String name;
-private int age;
+    private int age;
+    private String hoten;
+    private String diachi;
+    private int manvv;
+    public Nhanvien()
+    {
+        age = ;
+        hoten = "";
+        diachi = "";
+        manv = ;
+    }
+    public Nhanvien(int age, string hoten, string diachi, int manv)
+    {
+        this.age = age;
+        this.hoten = hoten;
+        this.diachi = diachi;
+        this.manv = manv;
+    }
 }
-class BACSI
+class bacsi extends Nhanvien()
 {
+    @Override 
+
 
 }
 class YTA
