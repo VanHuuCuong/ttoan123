@@ -66,17 +66,73 @@ class Nhanvien
 }
 class bacsi extends Nhanvien()
 {
-    @Override 
+    private int mabacsi;
+    public bacsi()
+    {
 
+    }
+    public bacsi(int age, string hoten, string diachi, int manv, int mabacsi)
+    {
+        this.age = age;
+        this.hoten = hoten;
+        this.diachi = diachi;
+        this.manv = manv;
+        this.mabacsi = mabacsi;
+    }
+    public void Nhap()
+    {
+        super.Nhap();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhap ma bac si:  ");
+        mabacsi = sc.nextInt();
+    }
+}
+class yta extends Nhanvien()
+{
+    private int mayta;
+    public yta()
+    {
+
+    }
+    public yta(int age, string hoten, string diachi, int manv, int mayta)
+    {
+        this.age = age;
+        this.hoten = hoten;
+        this.diachi = diachi;
+        this.manv = manv;
+        this.mayta = mayta;
+    }
+     public void Nhap()
+    {
+        super.Nhap();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhap ma y ta:  ");
+        mayta = sc.nextInt();
+    }
 
 }
-class YTA
+class letan extends Nhanvien()
 {
+    private int maletan;
+    public letan()
+    {
 
-}
-class LETAN
-{
-
+    }
+    public letan(int age, string hoten, string diachi, int manv, int mabacsi)
+    {
+        this.age = age;
+        this.hoten = hoten;
+        this.diachi = diachi;
+        this.manv = manv;
+        this.maletan = maletan;
+    }
+ public void Nhap()
+    {
+        super.Nhap();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhap ma le tan:  ");
+        maletan = sc.nextInt();
+    }
 }
 class LICHHEN
 {
