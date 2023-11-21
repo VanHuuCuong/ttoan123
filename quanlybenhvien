@@ -43,95 +43,111 @@ public void Xuat()
     System.out.println("Ma bao hiem: "+mabaohiem);
 }
 }
-class Nhanvien 
-{
+class Nhanvien {
     private int age;
     private String hoten;
     private String diachi;
-    private int manvv;
-    public Nhanvien()
-    {
-        age = ;
+    private int manv;
+    public Nhanvien() {
+        age = 0;
         hoten = "";
         diachi = "";
-        manv = ;
+        manv = 0;
     }
-    public Nhanvien(int age, string hoten, string diachi, int manv)
-    {
+    public Nhanvien(int age, String hoten, String diachi, int manv) {
         this.age = age;
         this.hoten = hoten;
         this.diachi = diachi;
         this.manv = manv;
+    }
+
+    public void Nhap() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhap tuoi: ");
+        age = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Nhap ho ten: ");
+        hoten = sc.nextLine();
+        System.out.println("Nhap dia chi: ");
+        diachi = sc.nextLine();
+        System.out.println("Nhap ma nhan vien: ");
+        manv = sc.nextInt();
+    }
+
+    public void Xuat() {
+        System.out.println("Thong tin nhan vien: ");
+        System.out.println("Tuoi: " + age);
+        System.out.println("Ho ten: " + hoten);
+        System.out.println("Dia chi: " + diachi);
+        System.out.println("Ma nhan vien: " + manv);
     }
 }
-class bacsi extends Nhanvien()
-{
+
+class bacsi extends Nhanvien {
     private int mabacsi;
-    public bacsi()
-    {
+
+    public bacsi() {
 
     }
-    public bacsi(int age, string hoten, string diachi, int manv, int mabacsi)
-    {
-        this.age = age;
-        this.hoten = hoten;
-        this.diachi = diachi;
-        this.manv = manv;
+
+    public bacsi(int age, String hoten, String diachi, int manv, int mabacsi) {
+        super(age, hoten, diachi, manv);
         this.mabacsi = mabacsi;
     }
-    public void Nhap()
-    {
+
+    public void Nhap() {
         super.Nhap();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Nhap ma bac si:  ");
+        System.out.println("Nhap ma bac si: ");
         mabacsi = sc.nextInt();
     }
+
+    public void Xuat() {
+        super.Xuat();
+        System.out.println("Ma bac si: " + mabacsi);
+    }
 }
-class yta extends Nhanvien()
-{
+class yta extends Nhanvien {
     private int mayta;
-    public yta()
-    {
+
+    public yta() {
 
     }
-    public yta(int age, string hoten, string diachi, int manv, int mayta)
-    {
-        this.age = age;
-        this.hoten = hoten;
-        this.diachi = diachi;
-        this.manv = manv;
+    public yta(int age, String hoten, String diachi, int manv, int mayta) {
+        super(age, hoten, diachi, manv);
         this.mayta = mayta;
     }
-     public void Nhap()
-    {
+    public void Nhap() {
         super.Nhap();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Nhap ma y ta:  ");
+        System.out.println("Nhap ma y ta: ");
         mayta = sc.nextInt();
     }
 
+    public void Xuat() {
+        super.Xuat();
+        System.out.println("Ma y ta: " + mayta);
+    }
 }
-class letan extends Nhanvien()
-{
+class letan extends Nhanvien {
     private int maletan;
-    public letan()
-    {
+
+    public letan() {
 
     }
-    public letan(int age, string hoten, string diachi, int manv, int mabacsi)
-    {
-        this.age = age;
-        this.hoten = hoten;
-        this.diachi = diachi;
-        this.manv = manv;
+    public letan(int age, String hoten, String diachi, int manv, int maletan) {
+        super(age, hoten, diachi, manv);
         this.maletan = maletan;
     }
- public void Nhap()
-    {
+    public void Nhap() {
         super.Nhap();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Nhap ma le tan:  ");
+        System.out.println("Nhap ma le tan: ");
         maletan = sc.nextInt();
+    }
+    public void Xuat() {
+        super.Xuat();
+        System.out.println("Ma le tan: " + maletan);
     }
 }
 class LICHHEN
