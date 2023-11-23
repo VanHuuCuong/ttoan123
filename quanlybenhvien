@@ -29,6 +29,7 @@ public void Nhap()
     ngay = sc.nextInt();
     thang = sc. nextInt();
     nam = sc.nextInt();
+    sc.nextLine();
     System.out.println("Nhap dia chi: ");
     diachi = sc.nextLine();
     System.out.println("Nhap ma bao hiem neu co: ");
@@ -42,6 +43,100 @@ public void Xuat()
     System.out.println("Dia chi: "+diachi);
     System.out.println("Ma bao hiem: "+mabaohiem);
 }
+}
+public class DanhSachBenhNhan {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int maxSize = 100; // Số lượng tối đa của danh sách
+        BENHNHAN[] danhSachBenhNhan = new BENHNHAN[maxSize];
+        int soLuongBenhNhan = 0;
+
+        int choice;
+        do {
+            System.out.println("\n===== MENU =====");
+            System.out.println("1. Thêm bệnh nhân");
+            System.out.println("2. Hiển thị danh sách bệnh nhân");
+            System.out.println("3. Chỉnh sửa thông tin bệnh nhân");
+            System.out.println("4. Xóa bệnh nhân");
+            System.out.println("0. Thoát");
+            System.out.print("Chọn: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Đọc bỏ kí tự xuống dòng
+
+            switch (choice) {
+                case 1:
+                    if (soLuongBenhNhan < maxSize) {
+                        danhSachBenhNhan[soLuongBenhNhan] = new BENHNHAN();
+                        danhSachBenhNhan[soLuongBenhNhan].Nhap();
+                        soLuongBenhNhan++;
+                        System.out.println("Thêm bệnh nhân thành công!");
+                    } else {
+                        System.out.println("Danh sách bệnh nhân đã đầy. Không thể thêm mới.");
+                    }
+                    break;
+                case 2:
+                    if (soLuongBenhNhan > 0) {
+                        for (int i = 0; i < soLuongBenhNhan; i++) {
+                            System.out.println("=== Bệnh nhân thứ " + (i + 1) + " ===");
+                            danhSachBenhNhan[i].Xuat();
+                        }
+                    } else {
+                        System.out.println("Danh sách bệnh nhân trống.");
+                    }
+                    break;
+                case 3:
+                    if (soLuongBenhNhan > 0) {
+                        System.out.print("Nhập tên bệnh nhân cần chỉnh sửa: ");
+                        String tenCanChinhSua = scanner.nextLine();
+                        int index = timKiemBenhNhan(danhSachBenhNhan, soLuongBenhNhan, tenCanChinhSua);
+                        if (index != -1) {
+                            System.out.println("=== Bệnh nhân cần chỉnh sửa ===");
+                            danhSachBenhNhan[index].Xuat();
+                            System.out.println("=== Nhập thông tin mới ===");
+                            danhSachBenhNhan[index].Nhap();
+                            System.out.println("Chỉnh sửa thành công!");
+                        } else {
+                            System.out.println("Không tìm thấy bệnh nhân có tên: " + tenCanChinhSua);
+                        }
+                    } else {
+                        System.out.println("Danh sách bệnh nhân trống.");
+                    }
+                    break;
+                case 4:
+                    if (soLuongBenhNhan > 0) {
+                        System.out.print("Nhập tên bệnh nhân cần xóa: ");
+                        String tenCanXoa = scanner.nextLine();
+                        int index = timKiemBenhNhan(danhSachBenhNhan, soLuongBenhNhan, tenCanXoa);
+                        if (index != -1) {
+                            System.arraycopy(danhSachBenhNhan, index + 1, danhSachBenhNhan, index, soLuongBenhNhan - index - 1);
+                            soLuongBenhNhan--;
+                            System.out.println("Xóa bệnh nhân thành công!");
+                        } else {
+                            System.out.println("Không tìm thấy bệnh nhân có tên: " + tenCanXoa);
+                        }
+                    } else {
+                        System.out.println("Danh sách bệnh nhân trống.");
+                    }
+                    break;
+                case 0:
+                    System.out.println("Chương trình kết thúc.");
+                    break;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
+                    break;
+            }
+
+        } while (choice != 0);
+    }
+
+    private static int timKiemBenhNhan(BENHNHAN[] danhSach, int soLuong, String tenCanTim) {
+        for (int i = 0; i < soLuong; i++) {
+            if (danhSach[i].hoten.equalsIgnoreCase(tenCanTim)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
 class Nhanvien {
     private int age;
