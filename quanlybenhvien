@@ -47,7 +47,7 @@ public void Xuat()
 public class DanhSachBenhNhan {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int maxSize = 100; // Số lượng tối đa của danh sách
+        int maxSize = 100;
         BENHNHAN[] danhSachBenhNhan = new BENHNHAN[maxSize];
         int soLuongBenhNhan = 0;
 
