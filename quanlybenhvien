@@ -1,5 +1,5 @@
 import java.util.Scanner;
-class BENHNHAN
+class BENHNHAN implements Serializable
 {
 private String hoten;
 private int ngay;
@@ -138,7 +138,7 @@ public class DanhSachBenhNhan {
         return -1;
     }
 }
-class Nhanvien {
+class Nhanvien implements Serializable {
     private int age;
     private String hoten;
     private String diachi;
@@ -178,7 +178,7 @@ class Nhanvien {
     }
 }
 
-class bacsi extends Nhanvien {
+class bacsi extends Nhanvien implements Serializable {
     private int mabacsi;
 
     public bacsi() {
@@ -202,7 +202,7 @@ class bacsi extends Nhanvien {
         System.out.println("Ma bac si: " + mabacsi);
     }
 }
-class yta extends Nhanvien {
+class yta extends Nhanvien implements Serializable {
     private int mayta;
 
     public yta() {
@@ -224,7 +224,7 @@ class yta extends Nhanvien {
         System.out.println("Ma y ta: " + mayta);
     }
 }
-class letan extends Nhanvien {
+class letan extends Nhanvien implements Serializable {
     private int maletan;
 
     public letan() {
@@ -245,35 +245,505 @@ class letan extends Nhanvien {
         System.out.println("Ma le tan: " + maletan);
     }
 }
-class LICHHEN
-{
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class File {
+
+
+    // hàm viết và đọc đối  tượng
+    //pathObj là các đường dẫn
+    // Lưu ý: muốn thêm 1 phần tử vào file thì phải đọc toàn bộ ra List rồi thêm vào List sau đó mới lưu lại lên file
+    public static <T> List<T> read(String pathObj) {
+        List<T> objs = new ArrayList<>();
+        try (ObjectInputStream file = new ObjectInputStream(new BufferedInputStream(new FileInputStream(pathObj)))) {
+            boolean eof = false;
+            while (!eof) {
+                try {
+                    T obj = (T) file.readObject();
+                    if (obj != null) {
+                        objs.add(obj);
+                    } else {
+                        eof = true;
+                    }
+                } catch (EOFException e) {
+                    eof = true;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return objs;
+    }
+
+
+    public static <T> void write(List<T> objs, String pathObj) {
+        try (ObjectOutputStream file = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(pathObj)))) {
+            for (T obj : objs) {
+                file.writeObject(obj);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+import java.io.Serializable;
+import java.util.Scanner;
+
+public class LichHen implements Serializable, NhapXuat {
+    private int id;
+    private String ngayHen;
+    private String gio;
+    private BenhNhan benhNhan;
+    private BacSi bacSi;
+    private String trieuChung;
+    private String status;
+
+    public LichHen() {
+
+    }
+
+    //    cần mảng để quản lí lịch hẹn đã xác nhận, đang chờ, hoặc hủy
+    public LichHen(int id, BenhNhan benhNhan, BacSi bacSi, String ngay, String gio, String status, String trieuChung) {
+        this.id = id;
+        this.bacSi = bacSi;
+        this.benhNhan = benhNhan;
+        ngayHen = ngay;
+        this.gio = gio;
+        this.status = status;
+        this.trieuChung = trieuChung;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setBacSi(BacSi bacSi) {
+        this.bacSi = bacSi;
+    }
+
+    public BacSi getBacSi() {
+        return bacSi;
+    }
+
+    public void setBenhNhan(BenhNhan benhNhan) {
+        this.benhNhan = benhNhan;
+    }
+
+    public BenhNhan getBenhNhan() {
+        return benhNhan;
+    }
+
+    public void setGio(String gio) {
+        this.gio = gio;
+    }
+
+    public String getGio() {
+        return gio;
+    }
+
+    public void setNgay(String ngay) {
+        ngayHen = ngay;
+    }
+
+    public String getNgay() {
+        return ngayHen;
+    }
+
+    public void setTrieuChung(String trieuChung) {
+        this.trieuChung = trieuChung;
+    }
+
+    public String getTrieuChung() {
+return trieuChung;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    // Nhập ngày và giờ được hẹn
+    @Override
+    public void Nhap() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập id: ");
+        id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Nhập ngày: ");
+        ngayHen = scanner.nextLine().trim();
+        System.out.println("Nhập giờ: ");
+        gio = scanner.nextLine().trim();
+        System.out.println("Nhập triệu chứng: ");
+        trieuChung = scanner.nextLine().trim();
+        System.out.println("Xác nhận: ");
+        status = scanner.nextLine();
+    }
+
+    // xuất lịch hẹn
+    @Override
+    public void Xuat() {
+        System.out.println("Lịch hẹn khám bệnh");
+        if (this.bacSi != null) {
+            System.out.println("Tên bác sĩ: " + bacSi.getHoten());
+        } else System.out.println("không có bác sĩ");
+        if (this.benhNhan != null) {
+            System.out.println("Tên bệnh nhân: " + benhNhan.getHoten());
+        } else System.out.println("không có bệnh nhân");
+        System.out.println("Triệu chứng cần khám: " + trieuChung);
+        System.out.println("Thời gian: " + ngayHen + ", " + gio + "h");
+    }
+
+    // hàm lựa chọn chỉnh sửa lịch hẹn
+    public void suaNgayGio() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập ngày: ");
+        setNgay(scanner.nextLine().trim());
+        System.out.println("Nhập giờ: ");
+        setGio(scanner.nextLine().trim());
+    }
+
+    //Thay đổi bác sĩ
+    public void suaBacSi() {
+        Scanner scanner = new Scanner(System.in);
+        BacSi si = new BacSi();
+        si.Nhap();
+        setBacSi(si);
+    }
+
+    //Thay đổi các triệu chứng về bệnh lý
+    public void suaTrieuChung() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Sửa triệu chứng: ");
+        setTrieuChung(scanner.nextLine().trim());
+    }
+
+    // Thay đổi trạng thái của lịch hẹn (đã xác nhận, đang chờ, hủy)
+    public void thayDoiStatus() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Thay đổi xác nhận: ");
+        setStatus(scanner.nextLine().trim());
+    }
+
+    public void chinhSuaLichHen() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Chỉnh sửa lịch hẹn ");
+        System.out.println("1. Sửa ngày và giờ");
+        System.out.println("2. Thay đổi bác sĩ");
+        System.out.println("3. Sửa thông tin về bệnh nhân");
+        System.out.println("4. Thay đổi trạng thái");
+        System.out.println("0. Thoát");
+        System.out.println("Nhập lựa chọn: ");
+        int op;
+        while (true) {
+            op = scanner.nextInt();
+            switch (op) {
+                case 1:
+                    suaNgayGio();
+break;
+                case 2:
+                    suaBacSi();
+                    break;
+                case 3:
+                    suaTrieuChung();
+                    break;
+                case 4:
+                    thayDoiStatus();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Lựa chọn không đúng, vui lòng nhập lại.");
+            }
+        }
+    }
 
 }
-class KHOA
-{
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Scanner;
+
+public class Khoa implements Serializable, NhapXuat {
+    private String tenKhoa;
+    private String chucNang;
+    List<BacSi> bacSiThuocKhoa;
+
+    public Khoa() {
+
+    }
+
+    public Khoa(String tenKhoa, String chucNang, List<BacSi> bacSiThuocKhoa) {
+        this.bacSiThuocKhoa = bacSiThuocKhoa;
+        this.tenKhoa = tenKhoa;
+        this.chucNang = chucNang;
+    }
+
+    public void setBacSiThuocKhoa(List<BacSi> bacSiThuocKhoa) {
+        this.bacSiThuocKhoa = bacSiThuocKhoa;
+    }
+
+    public List<BacSi> getBacSiThuocKhoa() {
+        return bacSiThuocKhoa;
+    }
+
+    public void setChucNang(String chucNang) {
+        this.chucNang = chucNang;
+    }
+
+    public String getChucNang() {
+        return chucNang;
+    }
+
+    public void setTenKhoa(String tenKhoa) {
+        this.tenKhoa = tenKhoa;
+    }
+
+    public String getTenKhoa() {
+        return tenKhoa;
+    }
+
+    // nhập thông tin của khoa
+    @Override
+    public void Nhap() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập tên khoa: ");
+        tenKhoa = scanner.nextLine().trim();
+        System.out.println("Nhập chức năng: ");
+        chucNang = scanner.nextLine().trim();
+
+    }
+
+    //hàm tìm bác sĩ có thuộc khoa
+    public BacSi findBacSi(int maSoBacSi) {
+        BacSi bacSi = new BacSi();
+        for (BacSi bs : bacSiThuocKhoa) {
+            if (bs.getMabacsi() == maSoBacSi) bacSi = bs;
+        }
+        return bacSi;
+    }
+
+    // xem các lịch hẹn của bác sĩ
+    @Override
+    public void Xuat() {
+        List<LichHen> lichHenList = File.read("file/DSLichHen.dat");
+        System.out.println("Nhập id lịch hẹn :");
+        int id = new Scanner(System.in).nextInt();
+        for (LichHen lichHen : lichHenList) {
+            if (lichHen.getId() == id) {
+                lichHen.Xuat();
+                break;
+            }
+        }
+        System.out.println("Bác sĩ không có lịch hẹn");
+    }
+
+
+    // xuất thông tin của khoa
+    public void xuatKhoa() {
+        System.out.println("Tên khoa:" + tenKhoa);
+        System.out.println("Chức năng:" + chucNang);
+        System.out.println("Thông tin các bác sĩ: ");
+
+        for (BacSi bacSi : bacSiThuocKhoa) {
+            bacSi.Xuat();
+        }
+    }
+
+    // Thêm bác sĩ
+    public List<BacSi> themBacSi(BacSi newBacsi) {
+        bacSiThuocKhoa.add(newBacsi);
+        return bacSiThuocKhoa;
+    }
+
+    // xóa bác sĩ
+public List<BacSi> xoaBacSi(BacSi newBacsi) {
+        bacSiThuocKhoa.remove(newBacsi);
+        return bacSiThuocKhoa;
+    }
 
 }
-class PHIEUKHAMBENH
-{
+import java.io.Serializable;
+import java.util.List;
+import java.util.Scanner;
 
+public class PhongBenh implements Serializable {
+    int soPhong;
+    private List<BenhNhan> benhNhans;
+    // xác định phòng khám có sẵn, đang sử dụng, đang bảo trì....
+    private String status;
+
+    public PhongBenh() {
+
+    }
+
+    public PhongBenh(String status) {
+        this.status = status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void Nhap() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập số phòng: ");
+        soPhong = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Nhập tính trạng: ");
+        status = scanner.nextLine().trim();
+    }
+
+    // xuất các thông tin phòng khám
+    public void xuatPhongKham() {
+        System.out.println("Số phong: " + soPhong);
+        System.out.println("Tình trạng phòng khám: " + status);
+        System.out.println("Bệnh Nhân: ");
+        if (benhNhans != null) {
+            for (BenhNhan benhNhan : benhNhans) {
+                System.out.println(benhNhan.getHoten() + ", ");
+            }
+        } else System.out.println("không có bệnh nhân");
+    }
 }
-class THUOC
-{
+import java.io.Serializable;
+import java.util.List;
+import java.util.Scanner;
 
-}
-class XETNGHIEM
-{
+public class LichTruc implements Serializable, NhapXuat {
+    private String ngayTruc;
+    private String caTruc;
+    private List<BacSi> bacSiTruc;
+    private List<YTa> yTas ;
+    private List<LeTan> leTans;
+    private String khoa;
+    private String status;
 
-}
-class QUYENHAN
-{
+    public LichTruc() {
 
-}
-class LICHTRUC
-{
+    }
 
-}
-class HOADON
-{
+    public LichTruc(String ngayTruc, String caTruc, List<BacSi> bacSiTruc, String status) {
+        this.ngayTruc = ngayTruc;
+        this.caTruc = caTruc;
+        this.bacSiTruc = bacSiTruc;
+        this.status = status;
+    }
 
+    public void setBacSiTruc(List<BacSi> bacSiTruc) {
+        this.bacSiTruc = bacSiTruc;
+    }
+
+    public List<BacSi> getBacSiTruc() {
+        return bacSiTruc;
+    }
+
+    public void setCaTruc(String caTruc) {
+        this.caTruc = caTruc;
+    }
+
+    public String getCaTruc() {
+        return caTruc;
+    }
+
+    public void setKhoa(String khoa) {
+        this.khoa = khoa;
+    }
+
+    public String getKhoa() {
+        return khoa;
+    }
+
+    public void setNgayTruc(String ngayTruc) {
+        this.ngayTruc = ngayTruc;
+    }
+
+    public String getNgayTruc() {
+        return ngayTruc;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    //hàm nhập thông tin ca trực
+    @Override
+    public void Nhap() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập ngày/tháng/năm trực: ");
+ngayTruc = scanner.nextLine().trim();
+        System.out.println("Nhập ca trực: ");
+        caTruc = scanner.nextLine().trim();
+        System.out.println("Nhập khoa: ");
+        khoa = scanner.nextLine().trim();
+    }
+
+    // hàm xuất thông tin ca trực
+    @Override
+    public void Xuat() {
+        System.out.println("Khoa: " + khoa);
+        System.out.println("Ngày :" + ngayTruc);
+        System.out.println("Ca trực :" + caTruc);
+        System.out.println("Các bác sĩ trực: ");
+        for (BacSi bacSi : bacSiTruc) {
+            System.out.println(bacSi.getMabacsi() + ", ");
+        }
+    }
+
+    // Thêm bác sĩ
+    public List<BacSi> themBacSi(BacSi newBacsi) {
+        bacSiTruc.add(newBacsi);
+        return bacSiTruc;
+    }
+
+    // xóa bác sĩ
+    public List<BacSi> xoaBacSi(BacSi newBacsi) {
+        bacSiTruc.remove(newBacsi);
+        return bacSiTruc;
+    }
+    public List<YTa> themYta(YTa yTa) {
+        yTas.add(yTa);
+        return yTas;
+    }
+
+    // xóa Y ta
+    public List<YTa> xoaYta(YTa yTa) {
+        yTas.remove(yTa);
+        return yTas;
+    }
+    public List<LeTan> themLeTan(LeTan leTan) {
+        leTans.add(leTan);
+        return leTans;
+    }
+
+    // xóa Le Tan
+    public List<LeTan> xoaLeTan(LeTan leTan) {
+        leTans.remove(leTan);
+        return leTans;
+    }
+
+    //hàm kiểm tra ca trực
+    public String kiemTraCaTruc() {
+        if (getStatus().equals("finish")) return "Ca trực đã kết thúc";
+        else if (getStatus().equals("running")) return " Đang trong ca trực";
+        else if (getStatus().equals("waitting")) return "Đang chờ";
+        else return "xác nhận";
+    }
 }
